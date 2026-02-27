@@ -24,7 +24,7 @@ export function History() {
                             <td>Há 2 meses</td>
                             <td>
                                 <Status statusColor="red">
-                                    Concluído
+                                    Interronpido
                                 </Status>
                             </td>
                         </tr>
@@ -33,8 +33,8 @@ export function History() {
                             <td>20 min</td>
                             <td>Há 2 meses</td>
                             <td>
-                                <Status statusColor="red">
-                                    Concluído
+                                <Status statusColor="yellow">
+                                    Em andamento
                                 </Status>
                             </td>
                         </tr>
