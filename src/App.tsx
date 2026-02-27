@@ -1,7 +1,8 @@
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "./styles/themes/default";
-import { BrowserRouter, Router } from "react-router-dom";
-
+import { BrowserRouter } from "react-router-dom";
+import { GlobalStyle } from "./styles/themes/global";
+import { Router } from "./Router";
 
 export function App() {
 
@@ -10,6 +11,7 @@ export function App() {
           <BrowserRouter>
             <Router />
           </BrowserRouter>
+          <GlobalStyle />
       </ThemeProvider>
   )
 }

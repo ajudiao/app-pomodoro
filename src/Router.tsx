@@ -1,1 +1,15 @@
+import { Route, Routes } from "react-router-dom";
+import { DefaultLayout } from "./layouts/Default";
+import { History } from "./pages/History";
+import { Home } from "./Home/Home";
 
+export function Router() {
+    return (
+        <Routes>
+            <Route path="/" element={< DefaultLayout />}>
+                <Route path="/" element={< Home />} />
+                <Route path="/history" element={< History />} />
+            </Route>
+        </Routes>
+    )
+}
