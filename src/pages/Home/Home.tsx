@@ -1,6 +1,6 @@
-import { PlayIcon } from "@phosphor-icons/react";
-import { CountdownContainer, DurationInput, FormContainer, HomeContainer, Separetor, TaskInput } from "./style";
-import { useState } from "react";
+import { PlayIcon } from '@phosphor-icons/react'
+import { CountdownContainer, DurationInput, FormContainer, HomeContainer, Separetor, TaskInput } from './style'
+import { useState } from 'react'
 
 
 export function Home() {
