@@ -9,13 +9,18 @@ const newCyleFormValidationSchema = zod.object({
     duration: zod.number().min(5).max(60),
 })
 
+interface NewCycleFormData {
+    task: string
+    duration: number
+}
+
 export function Home() {
 
     const { register, handleSubmit, watch, formState } = useForm({
         resolver: zodResolver(newCyleFormValidationSchema),
     })
 
-    function handleCreateNewCycle(data: object) {
+    function handleCreateNewCycle(data: NewCycleFormData) {
         console.log(data)
     }   
 
