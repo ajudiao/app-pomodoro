@@ -5,6 +5,7 @@ import {
     useState,
 } from 'react'
 import { ActionTypes, CycleReducer, type Cycle } from '../reducers/cycles/reducer'
+import { addNewCycleAction, interruptCurrentCycleAction, markCurrentCycleAsFinishedAction } from '../reducers/cycles/actions'
 
 /* ===========================
    Tipos
@@ -83,12 +84,7 @@ export function CyclesContextProvider({
             startDate: new Date(),
         }
 
-        dispatch({
-            type: ActionTypes.ADD_NEW_CYCLE,
-            payload: {
-                newCycle,
-            },
-        })
+        dispatch(addNewCycleAction(newCycle))
 
         setActiveCycleId(id)
         setAmountSecondsPassed(0)
@@ -98,13 +94,7 @@ export function CyclesContextProvider({
         Interrompe o ciclo atual.
     */
     function interruptCycle() {
-        dispatch({
-            type: ActionTypes.INTERRUPT_CURRENT_CYCLE,
-            payload: {
-                activeCycleId,
-            },
-        })
-
+        dispatch(interruptCurrentCycleAction())
         setActiveCycleId(null)
     }
 
@@ -112,13 +102,7 @@ export function CyclesContextProvider({
         Finaliza o ciclo atual.
     */
     function markCurrentCycleAsFinished() {
-        dispatch({
-            type: ActionTypes.MARK_CURRENT_CYCLE_AS_FINISHED,
-            payload: {
-                activeCycleId,
-            },
-        })
-
+        dispatch(markCurrentCycleAsFinishedAction())
         setActiveCycleId(null)
     }
 
