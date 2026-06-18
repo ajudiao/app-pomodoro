@@ -1,10 +1,11 @@
 import {
     createContext,
     type ReactNode,
+    useEffect,
     useReducer,
     useState,
 } from 'react'
-import { ActionTypes, CycleReducer, type Cycle } from '../reducers/cycles/reducer'
+import { CycleReducer, type Cycle } from '../reducers/cycles/reducer'
 import { addNewCycleAction, interruptCurrentCycleAction, markCurrentCycleAsFinishedAction } from '../reducers/cycles/actions'
 
 /* ===========================
@@ -50,7 +51,7 @@ export function CyclesContextProvider({
         O reducer é responsável por todas as alterações
         relacionadas com os ciclos.
     */
-    const [cycles, dispatch] = useReducer(CycleReducer,
+    const [cyclesState, dispatch] = useReducer(CycleReducer,
         [],
     )
 
@@ -64,10 +65,15 @@ export function CyclesContextProvider({
     */
     const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
 
+    useEffect(() => {
+        const stateJSON = JSON.stringify(cyclesState)
+        localStorage.setItem('@pomodoro:cycles-state-1.0.0', stateJSON)
+    }, [cyclesState])
+
     /*
         Procura o ciclo ativo na lista de ciclos.
     */
-    const activeCycle = cycles.find(
+    const activeCycle = cyclesState.find(
         cycle => cycle.id === activeCycleId,
     )
 
@@ -94,7 +100,7 @@ export function CyclesContextProvider({
         Interrompe o ciclo atual.
     */
     function interruptCycle() {
-        dispatch(interruptCurrentCycleAction())
+        dispatch(interruptCurrentCycleAction(activeCycle))
         setActiveCycleId(null)
     }
 
@@ -116,7 +122,7 @@ export function CyclesContextProvider({
     return (
         <CyclesContext.Provider
             value={{
-                cycles,
+                cycles: cyclesState,
                 activeCycle,
                 activeCycleId,
                 amountSecondsPassed,

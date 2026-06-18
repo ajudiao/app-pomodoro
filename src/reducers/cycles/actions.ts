@@ -1,7 +1,7 @@
-import type { Cycle } from "./reducer";
+import type { Cycle } from './reducer'
 
 
-/* ===========================
+/* ==========================
    Tipos das Actions
 =========================== */
 export enum ActionTypes {
@@ -27,9 +27,12 @@ export function addNewCycleAction(newCycle: Cycle) {
     }
 }
 
-export function interruptCurrentCycleAction() {
+export function interruptCurrentCycleAction(cycleId: string) {
     return {
         type: ActionTypes.INTERRUPT_CURRENT_CYCLE,
+        payload: {
+            cycleId,
+        },
     }
 }
 
