@@ -36,8 +36,11 @@ export function interruptCurrentCycleAction(cycleId: string) {
     }
 }
 
-export function markCurrentCycleAsFinishedAction() {
+export function markCurrentCycleAsFinishedAction(activeCycleId: string) {
     return {
         type: ActionTypes.MARK_CURRENT_CYCLE_AS_FINISHED,
+        payload: {
+            activeCycleId,
+        },
     }
 }

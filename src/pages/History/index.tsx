@@ -36,15 +36,15 @@ export function History() {
                                     })}</td>
                                     <td>
                                         {cycle.finishedDate ? (
-                                            <Status statusColor='green'>
+                                            <Status $statusColor='green'>
                                                 Concluído
                                             </Status>
                                         ) : cycle.interruptedDate ? (
-                                            <Status statusColor='red'>
+                                            <Status $statusColor='red'>
                                                 Interrompido
                                             </Status>
                                         ) : (
-                                            <Status statusColor='yellow'>
+                                            <Status $statusColor='yellow'>
                                                 Em andamento
                                             </Status>
                                         )}

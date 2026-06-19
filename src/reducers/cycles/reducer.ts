@@ -17,7 +17,7 @@ export function CycleReducer(state: Cycle[], action: any): Cycle[] {
 
         case ActionTypes.INTERRUPT_CURRENT_CYCLE:
             return state.map(cycle => {
-                if (cycle.id === action.payload.activeCycleId) {
+                if (cycle.id === action.payload.cycleId) {
                     return {
                         ...cycle,
                         interruptedDate: new Date(),

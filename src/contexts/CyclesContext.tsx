@@ -6,7 +6,7 @@ import {
     useState,
 } from 'react'
 import { CycleReducer, type Cycle } from '../reducers/cycles/reducer'
-import { addNewCycleAction, interruptCurrentCycleAction, markCurrentCycleAsFinishedAction } from '../reducers/cycles/actions'
+import { ActionTypes, addNewCycleAction, interruptCurrentCycleAction, markCurrentCycleAsFinishedAction } from '../reducers/cycles/actions'
 
 /* ===========================
    Tipos
@@ -24,13 +24,13 @@ interface CyclesContextType {
     activeCycleId: string | null
     amountSecondsPassed: number
     createNewCycle: (data: CreateCycleData) => void
-    interruptCycle: () => void
+    interruptCurrentCycle: () => void
     markCurrentCycleAsFinished: () => void
     setSecondPassed: (seconds: number) => void
 }
 
 interface CycleContextProviderProps {
-    children: ReactNode 
+    children: ReactNode
 }
 
 /* ===========================
@@ -51,9 +51,17 @@ export function CyclesContextProvider({
         O reducer é responsável por todas as alterações
         relacionadas com os ciclos.
     */
-    const [cyclesState, dispatch] = useReducer(CycleReducer,
-        [],
-    )
+    const [cyclesState, dispatch] = useReducer(CycleReducer, [], () => {
+        const storedStateAsJSON = localStorage.getItem(
+            '@pomodoro:cycles-state-1.0.0',
+        )
+
+        if (storedStateAsJSON) {
+            return JSON.parse(storedStateAsJSON)
+        }
+
+        return []
+    })
 
     /*
         Guarda o ID do ciclo atualmente ativo.
@@ -99,8 +107,11 @@ export function CyclesContextProvider({
     /*
         Interrompe o ciclo atual.
     */
-    function interruptCycle() {
-        dispatch(interruptCurrentCycleAction(activeCycle))
+    function interruptCurrentCycle() {
+        if (!activeCycleId) return
+
+        dispatch(interruptCurrentCycleAction(activeCycleId))
+
         setActiveCycleId(null)
     }
 
@@ -108,7 +119,9 @@ export function CyclesContextProvider({
         Finaliza o ciclo atual.
     */
     function markCurrentCycleAsFinished() {
-        dispatch(markCurrentCycleAsFinishedAction())
+        if (!activeCycleId) return
+        
+        dispatch(markCurrentCycleAsFinishedAction(activeCycleId))
         setActiveCycleId(null)
     }
 
@@ -127,7 +140,7 @@ export function CyclesContextProvider({
                 activeCycleId,
                 amountSecondsPassed,
                 createNewCycle,
-                interruptCycle,
+                interruptCurrentCycle,
                 markCurrentCycleAsFinished,
 
                 setSecondPassed,
